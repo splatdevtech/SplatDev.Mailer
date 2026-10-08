@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: microsoft/setup-msbuild@v2
+      - name: restore NuGet packages
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile "$env:RUNNER_TEMP\nuget.exe"
+          & "$env:RUNNER_TEMP\nuget.exe" restore "Simple Mail\Simple Mail.sln" -PackagesDirectory "Simple Mail\packages"
       - name: install .NET Framework 4.6 targeting pack
         run: choco install netfx-4.6-devpack -y --no-progress
       - name: build
