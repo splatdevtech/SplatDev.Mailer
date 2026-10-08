@@ -13,6 +13,7 @@ jobs:
       - name: restore NuGet packages
         shell: pwsh
         run: |
+          Remove-Item "Simple Mail\packages\Microsoft.Net.Compilers.1.0.0" -Recurse -Force -ErrorAction SilentlyContinue
           Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile "$env:RUNNER_TEMP\nuget.exe"
           & "$env:RUNNER_TEMP\nuget.exe" restore "Simple Mail\Simple Mail.sln" -PackagesDirectory "Simple Mail\packages"
       - name: install .NET Framework 4.6 targeting pack
